@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.bignerdranch.android.swapapp.User;
 
 import java.util.ArrayList;
@@ -168,6 +167,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * This method to check user exist or not
+     *
      * @param email
      * @return true/false
      */
@@ -205,11 +205,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursorCount > 0) {
             return true;
         }
+
         return false;
     }
 
     /**
      * This method to check user exist or not
+     *
      * @param email
      * @param password
      * @return true/false
@@ -242,11 +244,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null);                      //The sort order
 
         int cursorCount = cursor.getCount();
+
         cursor.close();
         db.close();
         if (cursorCount > 0) {
             return true;
         }
+
         return false;
     }
 }

@@ -2,35 +2,28 @@ package com.bignerdranch.android.swapapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
-
-import com.androidtutorialshub.loginregister.R;
-import com.androidtutorialshub.loginregister.helpers.InputValidation;
-import com.androidtutorialshub.loginregister.sql.DatabaseHelper;
+import com.bignerdranch.android.swapapp.R;
+import com.bignerdranch.android.swapapp.InputValidation;
+import com.bignerdranch.android.swapapp.DatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = LoginActivity.this;
-
     private NestedScrollView nestedScrollView;
-
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
-
     private TextInputEditText textInputEditTextEmail;
     private TextInputEditText textInputEditTextPassword;
-
     private AppCompatButton appCompatButtonLogin;
-
     private AppCompatTextView textViewLinkRegister;
-
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
 
@@ -49,17 +42,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * This method is to initialize views
      */
     private void initViews() {
-
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
-
         textInputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
         textInputLayoutPassword = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
-
         textInputEditTextEmail = (TextInputEditText) findViewById(R.id.textInputEditTextEmail);
         textInputEditTextPassword = (TextInputEditText) findViewById(R.id.textInputEditTextPassword);
-
         appCompatButtonLogin = (AppCompatButton) findViewById(R.id.appCompatButtonLogin);
-
         textViewLinkRegister = (AppCompatTextView) findViewById(R.id.textViewLinkRegister);
 
     }
