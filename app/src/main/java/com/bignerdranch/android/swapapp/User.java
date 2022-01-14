@@ -1,26 +1,23 @@
 package com.bignerdranch.android.swapapp;
 
+import android.graphics.Bitmap;
+
 public class User {
+    private String username, email, password;
+    private Bitmap mBitmap;
 
-    private int id;
-    private String name;
-    private String email;
-    private String password;
-
-    public int getId() {
-        return id;
+    public User(String name, String mEmail, String mPassword){
+        username=name;
+        email=mEmail;
+        password=mPassword;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getUsername() {
+        return username;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -37,5 +34,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Bitmap getBitmap() {
+        return mBitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        mBitmap = bitmap;
     }
 }

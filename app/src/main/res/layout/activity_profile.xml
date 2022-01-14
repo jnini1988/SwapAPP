@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/white"
+    android:id="@+id/detail">
+
+    <androidx.cardview.widget.CardView
+        app:cardElevation = "16dp"
+        app:cardCornerRadius = "160dp"
+        android:layout_gravity="center"
+        android:layout_margin = "16dp"
+        android:foregroundGravity = "center"
+        android:layout_width = "150dp"
+        android:layout_height = "150dp"
+        android:id="@+id/imageHolder">
+        <ImageView
+            android:scaleType = "centerCrop"
+            android:src = "@drawable/ic_launcher_background"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            android:id="@+id/profileImg"/>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/home_button"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:gravity="top"
+        android:text="@string/home" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/imageHolder">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username_hint"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:id="@+id/username" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email_hint"
+        android:textStyle="italic"
+        android:textSize="20dp"
+        android:id="@+id/email"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/username"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/listscroll"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@color/white">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="580dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/listRecyclerView" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:id="@+id/holder"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/listRecyclerView">
+        <Button
+            android:id="@+id/empty_view_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="Add" />
+        <Button
+            android:id="@+id/profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="Profile"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+</RelativeLayout>

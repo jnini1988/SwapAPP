@@ -1,128 +1,93 @@
 package com.bignerdranch.android.swapapp;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.core.widget.NestedScrollView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
-import android.util.Log;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
-import com.bignerdranch.android.swapapp.R;
-import com.bignerdranch.android.swapapp.InputValidation;
-import com.bignerdranch.android.swapapp.DatabaseHelper;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.appcompat.widget.AppCompatTextView;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private final AppCompatActivity activity = LoginActivity.this;
-    private NestedScrollView nestedScrollView;
-    private TextInputLayout textInputLayoutEmail;
-    private TextInputLayout textInputLayoutPassword;
-    private TextInputEditText textInputEditTextEmail;
-    private TextInputEditText textInputEditTextPassword;
-    private AppCompatButton appCompatButtonLogin;
-    private AppCompatTextView textViewLinkRegister;
-    private InputValidation inputValidation;
-    private DatabaseHelper databaseHelper;
+public class LoginActivity extends AppCompatActivity {
+    private EditText mEmailView;
+    private EditText mPasswordView;
+    private Button mSignInButton;
+    private AppCompatTextView mRegister;
+    private FeedReaderDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        mDbHelper = new FeedReaderDbHelper(this);
+        mEmailView = (EditText)findViewById(R.id.emailEditText);
+        mPasswordView = (EditText)findViewById(R.id.passwordEditText);
+        mSignInButton = (Button)findViewById(R.id.sign_in_button);
+        mRegister = (AppCompatTextView) findViewById(R.id.register_link);
 
-        initViews();
-        initListeners();
-        initObjects();
+        mSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db = mDbHelper.getReadableDatabase();
+                //check that all fields are entered
+                if(mPasswordView.getText().toString().trim().isEmpty() ||
+                        mEmailView.getText().toString().trim().isEmpty()){
+                    showMessage("Incomplete Field","Please enter both email and password");
+
+                }
+                //check if email and password match, if yes then switch to user profile page
+                else {
+                    Cursor c = db.rawQuery("SELECT * FROM UserDetails WHERE email='"
+                                    + mEmailView.getText().toString().trim() + "'" +
+                                    "AND password='"+mPasswordView.getText().toString().trim()+"'"
+                            , null);
+
+                    if (c.moveToFirst()) {
+                        String loginUsername = c.getString(1);
+                        String loginEmail = c.getString(2);
+
+                        Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                        intent.putExtra("key_name", loginUsername);
+                        intent.putExtra("key_email", loginEmail);
+                        startActivity(intent);
+                        clearText();
+                    }
+                    else {
+                        showMessage("Error", "Email and password does not match");
+                        clearText();
+                    }
+                }
+            }
+        });
+
+        //switch to register page
+        mRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent u = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(u);
+            }
+        });
     }
 
-    /**
-     * This method is to initialize views
-     */
-    private void initViews() {
-        nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
-        textInputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
-        textInputLayoutPassword = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
-        textInputEditTextEmail = (TextInputEditText) findViewById(R.id.textInputEditTextEmail);
-        textInputEditTextPassword = (TextInputEditText) findViewById(R.id.textInputEditTextPassword);
-        appCompatButtonLogin = (AppCompatButton) findViewById(R.id.appCompatButtonLogin);
-        textViewLinkRegister = (AppCompatTextView) findViewById(R.id.textViewLinkRegister);
-
+    public void showMessage(String title,String message)
+    {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
 
-    /**
-     * This method is to initialize listeners
-     */
-    private void initListeners() {
-        appCompatButtonLogin.setOnClickListener(this);
-        textViewLinkRegister.setOnClickListener(this);
-    }
-
-    /**
-     * This method is to initialize objects to be used
-     */
-    private void initObjects() {
-        databaseHelper = new DatabaseHelper(activity);
-        inputValidation = new InputValidation(activity);
-
-    }
-
-    /**
-     * This implemented method is to listen the click on view
-     *
-     * @param v
-     */
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.appCompatButtonLogin:
-                verifyFromSQLite();
-                break;
-            case R.id.textViewLinkRegister:
-                // Navigate to RegisterActivity
-                Intent intentRegister = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intentRegister);
-                break;
-        }
-    }
-
-    /**
-     * This method is to validate the input text fields and verify login credentials from SQLite
-     */
-    private void verifyFromSQLite() {
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
-            return;
-        }
-        if (!inputValidation.isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
-            return;
-        }
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_email))) {
-            return;
-        }
-
-        if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
-                , textInputEditTextPassword.getText().toString().trim())) {
-
-
-            Intent accountsIntent = new Intent(activity, UsersListActivity.class);
-            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
-            emptyInputEditText();
-            startActivity(accountsIntent);
-
-
-        } else {
-            // Snack Bar to show success message that record is wrong
-            Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * This method is to empty all input edit text
-     */
-    private void emptyInputEditText() {
-        textInputEditTextEmail.setText(null);
-        textInputEditTextPassword.setText(null);
+    public void clearText()
+    {
+        mEmailView.setText("");
+        mPasswordView.setText("");
     }
 }
