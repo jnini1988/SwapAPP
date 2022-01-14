@@ -18,12 +18,11 @@ import java.io.InputStream;
 public class Add extends AppCompatActivity {
     public static final int GET_FROM_GALLERY = 3;
     private ImageButton mImageView;
-    private EditText mItemName,mItemDes,mEmail;
+    private EditText mItemName,mItemDes;
     private Button add,back;
     private DBHelper mDatabase;
     private boolean changeImage=false;
 
-    //TODO: shouldn't ask user to add email, should retreive email of this account (do after combining)
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_item);
@@ -31,7 +30,6 @@ public class Add extends AppCompatActivity {
 
         mItemName=findViewById(R.id.edit_name);
         mItemDes=findViewById(R.id.edit_des);
-        mEmail=findViewById(R.id.edit_email);
 
         mImageView=findViewById(R.id.itemImage);
         mImageView.setOnClickListener(new View.OnClickListener(){
@@ -58,16 +56,16 @@ public class Add extends AppCompatActivity {
             public void onClick(View view) {
                 final String name=mItemName.getText().toString();
                 final String des=mItemDes.getText().toString();
-                final String email=mEmail.getText().toString();
 
                 if(name.trim().isEmpty() ||
                         des.trim().isEmpty() ||
-                        email.trim().isEmpty() || changeImage==false){
+                         changeImage==false){
                     showMessage("Incomplete fields","Make sure you fill in all required fields and add a picture");
                 }
                 else {
                     BitmapDrawable drawable=(BitmapDrawable)mImageView.getDrawable();
                     Bitmap bitmap=drawable.getBitmap();
+                    String email=User.getInstance().getEmail();
                     Item i = new Item(name,des,email,bitmap);
                     mDatabase.addItems(i);
                     finish();

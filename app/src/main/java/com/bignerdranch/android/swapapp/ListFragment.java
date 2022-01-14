@@ -60,7 +60,6 @@ public class ListFragment extends Fragment{
             }
         });
 
-        //TODO: bug here, starting profile activity will ask for intent with extra
         mProfileButton=(Button) view.findViewById(R.id.profile_button);
         mProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override

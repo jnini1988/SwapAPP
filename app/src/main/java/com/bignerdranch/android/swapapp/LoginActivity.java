@@ -55,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                         intent.putExtra("key_name", loginUsername);
                         intent.putExtra("key_email", loginEmail);
+                        User user=new User(loginUsername,loginEmail,mPasswordView.getText().toString());
+                        user.storeUser(user);
                         startActivity(intent);
                         clearText();
                     }
