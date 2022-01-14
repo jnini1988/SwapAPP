@@ -1,7 +1,10 @@
 package com.bignerdranch.android.swapapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,11 +16,10 @@ import androidx.appcompat.widget.Toolbar;
 public class ProfileActivity extends AppCompatActivity {
     private TextView mUsernameView;
     private TextView mEmailView;
-    private ImageView mProfileView;
-    //Todo: allow user to change profile, need to add profile to user database
-    //maybe have loginactivity pass userid, then in profile page, use readable database each time
-    private Button mHomeButton;
-    FeedReaderDbHelper mDbHelper = new FeedReaderDbHelper(this);
+    private ImageView mProfileView; //Todo: allow user to change profile, need to add profile to user database
+    private Button mHomeButton,mLogoutButton;
+    private FeedReaderDbHelper mDbHelper;
+    private static String username="", email="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +32,28 @@ public class ProfileActivity extends AppCompatActivity {
         mUsernameView=(TextView)findViewById(R.id.username);
         mEmailView=(TextView)findViewById(R.id.email);
         mHomeButton=(Button)findViewById(R.id.home_button);
+        mLogoutButton=(Button)findViewById(R.id.logout_button);
+
         Intent intent = getIntent();
-        String username = intent.getExtras().getString("key_name");
-        String email = intent.getExtras().getString("key_email");
+        if(intent.hasExtra("key_name")&&intent.hasExtra("key_email")){
+            username = intent.getExtras().getString("key_name");
+            email = intent.getExtras().getString("key_email");
+        }
         mUsernameView.setText(username);
         mEmailView.setText(email);
+
 
         mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(i);
             }
         });

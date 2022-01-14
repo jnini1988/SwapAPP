@@ -1,30 +1,19 @@
 package com.bignerdranch.android.swapapp;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class Add extends AppCompatActivity {
     public static final int GET_FROM_GALLERY = 3;
@@ -32,6 +21,7 @@ public class Add extends AppCompatActivity {
     private EditText mItemName,mItemDes,mEmail;
     private Button add,back;
     private DBHelper mDatabase;
+    private boolean changeImage=false;
 
     //TODO: shouldn't ask user to add email, should retreive email of this account (do after combining)
     protected void onCreate(Bundle savedInstanceState){
@@ -47,6 +37,7 @@ public class Add extends AppCompatActivity {
         mImageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                changeImage=true;
                 Intent getIntent=new Intent(Intent.ACTION_GET_CONTENT);
                 getIntent.setType("image/*");
 
@@ -69,15 +60,14 @@ public class Add extends AppCompatActivity {
                 final String des=mItemDes.getText().toString();
                 final String email=mEmail.getText().toString();
 
-                BitmapDrawable drawable=(BitmapDrawable)mImageView.getDrawable();
-                Bitmap bitmap=drawable.getBitmap();
-
                 if(name.trim().isEmpty() ||
                         des.trim().isEmpty() ||
-                        email.trim().isEmpty()){
-                    showMessage("Incomplete fields","Make sure you fill in all required fields");
+                        email.trim().isEmpty() || changeImage==false){
+                    showMessage("Incomplete fields","Make sure you fill in all required fields and add a picture");
                 }
                 else {
+                    BitmapDrawable drawable=(BitmapDrawable)mImageView.getDrawable();
+                    Bitmap bitmap=drawable.getBitmap();
                     Item i = new Item(name,des,email,bitmap);
                     mDatabase.addItems(i);
                     finish();
