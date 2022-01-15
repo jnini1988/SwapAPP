@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SwapAPP">
         <activity
-            android:label="Login"
+            android:label="Swap App"
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter >
