@@ -1,24 +1,26 @@
 package com.bignerdranch.android.swapapp;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+
 public class ProfileActivity extends AppCompatActivity {
     private TextView mUsernameView;
     private TextView mEmailView;
+    private TextView mNoPost;
     private Button mHomeButton,mLogoutButton;
-    private FeedReaderDbHelper mDbHelper;
+    private ListView mPostedList;
     private static String username="", email="";
+    private DBHelper mDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,23 @@ public class ProfileActivity extends AppCompatActivity {
         mUsernameView.setText(username);
         mEmailView.setText(email);
 
+        mDatabase = new DBHelper(getApplicationContext());
+        ArrayList<Item> allItem = mDatabase.getListItem();
+        ArrayList<Item> postedItem=new ArrayList<Item>();
+        for(Item i:allItem){
+            if(i.getSellerEmail().equals(email)){
+                postedItem.add(i);
+            }
+        }
+        if(postedItem.size()>0){
+            mPostedList=(ListView)findViewById(R.id.posted_list);
+            postListAdapter customAdapter = new postListAdapter(this, R.layout.posted_item_row,postedItem);
+            mPostedList.setAdapter(customAdapter);
+        }
+        else{
+            mNoPost=(TextView)findViewById(R.id.noItem);
+            mNoPost.setText("You have not posted anything yet");
+        }
 
         mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override

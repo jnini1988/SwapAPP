@@ -29,7 +29,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         return holder;
     }
 
-    //TODO: trim description if it is too long
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         final Item i=listItems.get(position);

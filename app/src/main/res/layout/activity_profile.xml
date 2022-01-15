@@ -47,7 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/imageHolder">
+        android:layout_below="@id/imageHolder"
+        android:id="@+id/textHolder">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,5 +68,36 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/username"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/post_title"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/textHolder"
+        android:id="@+id/postTitle">
+    </TextView>
+
+    <ListView
+        android:id="@+id/posted_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@id/postTitle"
+        android:padding="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@id/postTitle"
+        android:padding="10dp"
+        android:id="@+id/noItem"
+        android:textStyle="italic">
+    </TextView>
+
 
 </RelativeLayout>
