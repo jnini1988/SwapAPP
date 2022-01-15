@@ -16,6 +16,7 @@ public class RegisterActivity extends AppCompatActivity{
     private EditText mUsernameView;
     private EditText mEmailView;
     private EditText mPasswordView;
+    private EditText mRePasswordView;
     private Button mRegisterButton;
     private Button mBackButton;
     private FeedReaderDbHelper mDbHelper;
@@ -31,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity{
         mUsernameView = (EditText)findViewById(R.id.usernameEditText);
         mEmailView = (EditText)findViewById(R.id.emailEditText);
         mPasswordView = (EditText)findViewById(R.id.passwordEditText);
+        mRePasswordView = (EditText)findViewById(R.id.repasswordEditText);
         mRegisterButton = (Button)findViewById(R.id.register_button);
         mBackButton = (Button)findViewById(R.id.back_button);
 
@@ -41,7 +43,8 @@ public class RegisterActivity extends AppCompatActivity{
             public void onClick(View v) {
                 if(mPasswordView.getText().toString().trim().isEmpty() ||
                         mEmailView.getText().toString().trim().isEmpty() ||
-                        mUsernameView.getText().toString().trim().isEmpty()){
+                        mUsernameView.getText().toString().trim().isEmpty()||
+                        mRePasswordView.getText().toString().trim().isEmpty()){
                     showMessage("Incomplete fields","Make sure you fill in all required fields");
                 }
                 else {
@@ -58,22 +61,26 @@ public class RegisterActivity extends AppCompatActivity{
                     else {
                         SQLiteDatabase db = mDbHelper.getWritableDatabase();
                         ContentValues values = new ContentValues();
-
                         String username = mUsernameView.getText().toString().trim();
                         String email = mEmailView.getText().toString().trim();
                         String password = mPasswordView.getText().toString().trim();
-                        values.put(FeedReaderContract.FeedEntry.COLUMN_USERNAME, username);
-                        values.put(FeedReaderContract.FeedEntry.COLUMN_EMAIL, email);
-                        values.put(FeedReaderContract.FeedEntry.COLUMN_PASSWORD, password);
-                        showMessage("Registration Success", "Your account has been registered!");
-                        clearText();
+                        String confirm = mRePasswordView.getText().toString().trim();
+                        if(password.equals(confirm)) {
+                            values.put(FeedReaderContract.FeedEntry.COLUMN_USERNAME, username);
+                            values.put(FeedReaderContract.FeedEntry.COLUMN_EMAIL, email);
+                            values.put(FeedReaderContract.FeedEntry.COLUMN_PASSWORD, password);
+                            showMessage("Registration Success", "Your account has been registered!");
+                            clearText();
 
-                        long newRowId = db.insert(
-                                FeedReaderContract.FeedEntry.TABLE_NAME,
-                                FeedReaderContract.FeedEntry.COLUMN_NAME_NULLABLE, values);
-
-                        Intent u = new Intent(RegisterActivity.this, com.bignerdranch.android.swapapp.LoginActivity.class);
-                        startActivity(u);
+                            long newRowId = db.insert(
+                                    FeedReaderContract.FeedEntry.TABLE_NAME,
+                                    FeedReaderContract.FeedEntry.COLUMN_NAME_NULLABLE, values);
+                            Intent u = new Intent(RegisterActivity.this, com.bignerdranch.android.swapapp.LoginActivity.class);
+                            startActivity(u);
+                        }
+                        else{
+                            showMessage("Registration fail", "Please make sure your passwords match");
+                        }
                     }
                 }
             }
