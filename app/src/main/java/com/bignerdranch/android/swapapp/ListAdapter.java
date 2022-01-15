@@ -1,21 +1,16 @@
 package com.bignerdranch.android.swapapp;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
     private Context context;
@@ -73,7 +68,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         public void onClick(View view) {
             Bundle bundle= new Bundle();
             bundle.putInt("position",getAdapterPosition());
-            AppCompatActivity activity=(AppCompatActivity) view.getContext();
+            AppCompatActivity activity=(AppCompatActivity) context;
             ItemFragment frag=new ItemFragment();
             frag.setArguments(bundle);
             activity.getSupportFragmentManager().beginTransaction().replace(R.id.listscroll,frag).addToBackStack(null).commit();

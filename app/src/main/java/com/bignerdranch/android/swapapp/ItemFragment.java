@@ -9,10 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ItemFragment extends Fragment {
     private TextView mViewName, mViewDes, mViewEmail,mViewDate;

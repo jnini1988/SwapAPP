@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 public class ProfileActivity extends AppCompatActivity {
     private TextView mUsernameView;
     private TextView mEmailView;
-    private ImageView mProfileView; //Todo: allow user to change profile, need to add profile to user database
     private Button mHomeButton,mLogoutButton;
     private FeedReaderDbHelper mDbHelper;
     private static String username="", email="";
@@ -33,7 +32,6 @@ public class ProfileActivity extends AppCompatActivity {
         mEmailView=(TextView)findViewById(R.id.email);
         mHomeButton=(Button)findViewById(R.id.home_button);
         mLogoutButton=(Button)findViewById(R.id.logout_button);
-
         Intent intent = getIntent();
         if(intent.hasExtra("key_name")&&intent.hasExtra("key_email")){
             username = intent.getExtras().getString("key_name");

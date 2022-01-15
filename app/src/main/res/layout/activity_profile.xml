@@ -21,7 +21,7 @@
         android:layout_height = "150dp"
         android:id="@+id/imageHolder">
         <ImageView
-            android:src = "@drawable/ic_launcher_background"
+            android:src = "@drawable/icon"
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
             android:id="@+id/profileImg"/>

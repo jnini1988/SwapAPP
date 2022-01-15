@@ -20,8 +20,6 @@ public class RegisterActivity extends AppCompatActivity{
     private Button mBackButton;
     private FeedReaderDbHelper mDbHelper;
 
-    //TODO: add a edittext that confirms password by asking user to type again
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

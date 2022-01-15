@@ -1,13 +1,8 @@
 package com.bignerdranch.android.swapapp;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import java.util.ArrayList;
 
 public class FeedReaderDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
@@ -24,23 +19,6 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
                     FeedReaderContract.FeedEntry.COLUMN_EMAIL + TEXT_TYPE + COMMA_SEP +
                     FeedReaderContract.FeedEntry.COLUMN_PASSWORD + TEXT_TYPE +
                     " )";
-
-    //Todo: may not be needed
-    User getUser(String mEmail) {
-        String sql = "SELECT * FROM " + FeedReaderContract.FeedEntry.TABLE_NAME+
-                " WHERE email="+mEmail;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(sql, null);
-
-        if (cursor.moveToFirst()) {
-            String username = cursor.getString(1);
-            String password = cursor.getString(3);
-            User user = new User(username,mEmail,password);
-            return user;
-        }
-        cursor.close();
-        return null;
-    }
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedReaderContract.FeedEntry.TABLE_NAME;
