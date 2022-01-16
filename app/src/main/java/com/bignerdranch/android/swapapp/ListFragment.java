@@ -39,7 +39,7 @@ public class ListFragment extends Fragment{
         }
         else {
             recyclerView.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "Seem like there's nothing in for trade.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Seems like there's nothing in for trade.", Toast.LENGTH_LONG).show();
         }
 
         mEmptyViewAddButton = (Button) view.findViewById(R.id.empty_view_add_button);
