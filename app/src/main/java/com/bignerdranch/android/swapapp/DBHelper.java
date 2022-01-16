@@ -35,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    ArrayList<Item> getListItem() {
+    public ArrayList<Item> getListItem() {
         String sql = "select * from " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Item> itemList = new ArrayList<>();

@@ -25,27 +25,29 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textStyle="bold"
-        android:hint="Item Name"
-        tools:text="Item Name"/>
+        android:hint="@string/item_name_hint"
+        android:maxLines="1"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/edit_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:hint="Item Description"
-        tools:text="Description"/>
+        android:hint="@string/item_des_hint"
+        android:maxLines="5"
+        android:singleLine="false"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="@string/add_button"
         android:id="@+id/add_button"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:text="@string/back_button"
         android:id="@+id/back_button"/>
 
 </LinearLayout>

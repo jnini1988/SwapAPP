@@ -9,9 +9,12 @@
     <string name="register_link">Register an account</string>
     <string name="register">Register</string>
     <string name="main">Main</string>
-    <string name="back">Back</string>
+    <string name="back_button">Back</string>
     <string name="home">Home</string>
     <string name="logout">Log Out</string>
     <string name="post_title">Posted Items:</string>
+    <string name="item_name_hint">Item Name</string>
+    <string name="item_des_hint">Item Description</string>
+    <string name="add_button">Add</string>
 
 </resources>

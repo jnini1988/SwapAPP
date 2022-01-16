@@ -1,5 +1,6 @@
 package com.bignerdranch.android.swapapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,7 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class Add extends AppCompatActivity {
-    public static final int GET_FROM_GALLERY = 3;
+    public static final int GET_FROM_GALLERY = 4;
     private ImageButton mImageView;
     private EditText mItemName,mItemDes;
     private Button add,back;
@@ -36,14 +37,10 @@ public class Add extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 changeImage=true;
-                Intent getIntent=new Intent(Intent.ACTION_GET_CONTENT);
-                getIntent.setType("image/*");
-                Intent pickIntent=new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
-                Intent chooserIntent=Intent.createChooser(getIntent,"Select Image");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,new Intent[] {pickIntent});
-                startActivityForResult(chooserIntent,GET_FROM_GALLERY);
+                Intent pickImage = new Intent(Intent.ACTION_GET_CONTENT);
+                pickImage.setType("image/*");
+                Intent chooser=Intent.createChooser(pickImage,"Pick Image");
+                startActivityForResult(chooser, GET_FROM_GALLERY);
             }
         });
 
@@ -83,9 +80,9 @@ public class Add extends AppCompatActivity {
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GET_FROM_GALLERY) {
+        if (requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             try{
                 InputStream inputStream=getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap=BitmapFactory.decodeStream(inputStream);
@@ -97,13 +94,13 @@ public class Add extends AppCompatActivity {
         }
     }
 
-    public void showMessage(String title,String message)
-    {
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }
+        public void showMessage (String title, String message)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(true);
+            builder.setTitle(title);
+            builder.setMessage(message);
+            builder.show();
+        }
 
-}
+    }
